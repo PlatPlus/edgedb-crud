@@ -1,8 +1,11 @@
 {
 	"name": "edgedb-crud",
-	"main": "dist/index.js",
-	"module": "dist/index.mjs",
-	"types": "dist/index.d.ts",
+	"type": "module",
+	"types": "./dist/index.d.ts",
+	"exports": "./dist/index.js",
+	"engines": {
+		"node": ">=14"
+	},
 	"version": "0.0.19",
 	"description": "EdgeDB class for CRUD operations",
 	"author": {
@@ -16,7 +19,6 @@
 		"edgedb"
 	],
 	"license": "CC-BY-4.0",
-	"type": "module",
 	"devDependencies": {
 		"@swc/core": "^1.3.72",
 		"edgedb": "^1.3.4",
