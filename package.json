@@ -11,5 +11,6 @@
 		"email": "contact@platonivanov.com",
 		"url": "https://platonivanov.com"
 	},
-	"license": "CC-BY-4.0"
+	"license": "CC-BY-4.0",
+	"type": "module"
 }
