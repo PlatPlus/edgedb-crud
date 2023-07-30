@@ -24,6 +24,6 @@
 	},
 	"scripts": {
 		"build": "tsup ./src/index.ts --format cjs,esm --dts",
-		"publish": "npm run build && npm version patch --force && npm publish"
+		"pub": "npm run build && pnpm version patch --force && pnpm publish"
 	}
 }
