@@ -1,9 +1,9 @@
 {
 	"name": "edgedb-crud",
-	"main": "./dist/index.js",
+	"main": "dist/index.js",
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "EdgeDB class for CRUD operations",
 	"author": {
 		"name": "Platon Ivanov",
