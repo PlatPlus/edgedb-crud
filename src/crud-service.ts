@@ -5,9 +5,11 @@ export { createClient } from "edgedb";
 // Class which implements CRUD operations for a given type with EdgeDB objects
 export class CRUDService<
 	/** "types" object exported from interfaces */
-    AllTypes extends { [key: string]: object },
+    AllTypes extends any,
+    // @ts-expect-error
 	TypeName extends keyof Omit<AllTypes['default'], 'Timestampable' | 'Role'> = keyof Omit<AllTypes['default'], 'Timestampable' | 'Role'>,
-	Type extends AllTypes['default'][TypeName] = AllTypes['default'][TypeName]
+    // @ts-expect-error
+    Type extends AllTypes['default'][TypeName] = AllTypes['default'][TypeName]
 > {
     e: any
 	typeName: TypeName
