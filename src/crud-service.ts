@@ -6,15 +6,15 @@ export { createClient } from "edgedb";
 export class CRUDService<
 	/** "types" object exported from interfaces */
     AllTypes extends { [key: string]: object },
-	TypeName extends keyof Omit<AllTypes['default'], 'Timestampable' | 'Role'>,
-	Type extends AllTypes['default'][TypeName]
+	TypeName extends keyof Omit<AllTypes['default'], 'Timestampable' | 'Role'> = keyof Omit<AllTypes['default'], 'Timestampable' | 'Role'>,
+	Type extends AllTypes['default'][TypeName] = AllTypes['default'][TypeName]
 > {
     e: any
 	typeName: TypeName
 	eType: any
 	eFields: any
     client: Client
-    
+
 	constructor(private config: {
 		/** Ready EdgeDB client or options for instantialization */
         client?: Client | ConnectOptions,
