@@ -1,0 +1,15 @@
+{	
+	"name": "edgedb-crud",
+	"main": "./src/index.ts",
+	"version": "0.0.1",
+	"description": "EdgeDB class for CRUD operations",
+	"dependencies": {
+		"edgedb": "^1.3.4"
+	},
+	"author": {
+		"name": "Platon Ivanov",
+		"email": "contact@platonivanov.com",
+		"url": "https://platonivanov.com"
+	},
+	"license": "CC-BY-4.0"
+}
