@@ -26,6 +26,6 @@
 	},
 	"scripts": {
 		"build": "tsup ./src/index.ts",
-		"pub": "npm run build && pnpm version patch --force && pnpm publish"
+		"pub": "npm run build && pnpm version patch --force && pnpm publish --no-git-checks"
 	}
 }
