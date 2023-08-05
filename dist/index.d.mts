@@ -18,7 +18,7 @@ AllTypes extends any, TypeName extends keyof Omit<AllTypes['default'], 'Timestam
         /** Default object exported from edgeql-js */
         edgedb: any;
     });
-    create: (data: Omit<Type, 'id'>) => Promise<Type>;
+    create: (data: Partial<Omit<Type, 'id'>>) => Promise<Type>;
     updateById: (id: string, data: Partial<Type>) => Promise<Type>;
     findAll: () => Promise<Type[]>;
     findById: (id: string) => Promise<Type>;
