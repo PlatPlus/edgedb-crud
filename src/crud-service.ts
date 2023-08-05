@@ -1,56 +1,63 @@
-import createClient, { Client, ConnectOptions, Duration } from "edgedb";
+import createClient, { Client, ConnectOptions, Duration } from 'edgedb'
 
-export { createClient } from "edgedb";
+export { createClient } from 'edgedb'
 
 // Class which implements CRUD operations for a given type with EdgeDB objects
 export class CRUDService<
 	/** "types" object exported from interfaces */
-    AllTypes extends any,
-    // @ts-expect-error
-	TypeName extends keyof Omit<AllTypes['default'], 'Timestampable' | 'Role'> = keyof Omit<AllTypes['default'], 'Timestampable' | 'Role'>,
-    // @ts-expect-error
-    Type extends AllTypes['default'][TypeName] = AllTypes['default'][TypeName]
+	AllTypes extends any,
+	// @ts-expect-error
+	TypeName extends keyof Omit<AllTypes['default'], 'Timestampable'> = keyof Omit<
+		// @ts-expect-error
+		AllTypes['default'],
+		'Timestampable'
+	>,
+	// @ts-expect-error
+	Type extends AllTypes['default'][TypeName] = AllTypes['default'][TypeName]
 > {
-    e: any
+	e: any
 	typeName: TypeName
 	eType: any
 	eFields: any
-    client: Client
+	client: Client
 
-	constructor(private config: {
-		/** Ready EdgeDB client or options for instantialization */
-        client?: Client | ConnectOptions,
-		/** Name of EdgeDB type */
-		type: TypeName,
-		/** Default object exported from edgeql-js */
-		edgedb: any
-    }) {
-        if (config.client) {
-            // if is client key has 'options', it means it's a Client
+	constructor(
+		private config: {
+			/** Ready EdgeDB client or options for instantialization */
+			client?: Client | ConnectOptions
+			/** Name of EdgeDB type */
+			type: TypeName
+			/** Default object exported from edgeql-js */
+			edgedb: any
+		}
+	) {
+		if (config.client) {
+			// if is client key has 'options', it means it's a Client
 			if (!('options' in config.client)) {
 				this.client = createClient(config.client)
 			}
 
-			this.client = this.client.withConfig({
-				session_idle_transaction_timeout: Duration.from({ seconds: 10 }),
-				allow_bare_ddl: 'AlwaysAllow',
-			})
-			.withRetryOptions({
-				attempts: 3,
-				backoff: (attemptNo: number) => {
-					// exponential backoff
-					return 2 ** attemptNo * 100 + Math.random() * 100
-				},
-			})
-        }
+			this.client = this.client
+				.withConfig({
+					session_idle_transaction_timeout: Duration.from({ seconds: 10 }),
+					allow_bare_ddl: 'AlwaysAllow',
+				})
+				.withRetryOptions({
+					attempts: 3,
+					backoff: (attemptNo: number) => {
+						// exponential backoff
+						return 2 ** attemptNo * 100 + Math.random() * 100
+					},
+				})
+		}
 
-        this.e = this.config.edgedb
-        this.typeName = this.config.type
-        this.eType = this.e[this.typeName]
-        this.eFields = this.eType['*']
-    }
+		this.e = this.config.edgedb
+		this.typeName = this.config.type
+		this.eType = this.e[this.typeName]
+		this.eFields = this.eType['*']
+	}
 
-	create = async (data: Omit<Type, 'id'>) => {
+	create = async (data: Partial<Omit<Type, 'id'>>) => {
 		return await this.client.transaction(async (tx) => {
 			const { id: newId } = await this.e.insert(this.eType, data as any).run(tx)
 
